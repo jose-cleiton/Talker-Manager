@@ -1,31 +1,39 @@
+const validator = require('email-validator');
+
 const isValidUsername = (req, res, next) => {
   const { username } = req.body;
   
   if (!username || username.length < 3) {
-    return res.status(200).json({ message: 'invalid data' });
+    return res.status(400).json({ message: 'invalid data' });
   }  
   next();
 };
   
 const isValidEmail = (req, res, next) => {
   const { email } = req.body;
-
-  if (
-    !email
-    || !email.includes('@')
-    || !email.includes('.com')
-  ) return res.status(200).json({ message: 'invalid data' });
+ 
+  if (!email) {
+    return res.status(400)
+      .json({ message: 'O campo "email" é obrigatório' });
+  }
+  if (!validator.validate(email)) {
+    return res.status(400)
+      .json({ message: 'O "email" deve ter o formato "email@email.com"' });
+  }
 
   next();
 };
 
 const isValidPassword = (req, res, next) => {
   const { password } = req.body;
-
-  if (!/^[0-9]{4,8}$/.test(password)) {
-    return res.status(200).json({ message: 'invalid data' });
+  if (!password) {
+    return res.status(400)
+      .json({ message: 'O campo "password" é obrigatório' });
   }
-
+  if (password.length < 6) {
+    return res.status(400)
+      .json({ message: 'O "password" deve ter pelo menos 6 caracteres' });
+  }
   next();
 };
   
