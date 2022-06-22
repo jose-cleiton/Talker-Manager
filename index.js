@@ -27,7 +27,7 @@ app.get('/talker', async (req, res) => {
     }
     return res.status(HTTP_OK_STATUS).json(foundTalker);
  });
- app.post('/login', isValidEmail, isValidPassword, (req, res) => {
+ app.post('/login', isValidEmail, isValidPassword, (_req, res) => {
   const token = generator.generate({ length: 16, numbers: true });
   return res.status(200).json({ token });
  });

@@ -14,7 +14,7 @@ const isValidEmail = (req, res, next) => {
     !email
     || !email.includes('@')
     || !email.includes('.com')
-  ) res.status(200).json({ message: 'invalid data' });
+  ) return res.status(200).json({ message: 'invalid data' });
 
   next();
 };
