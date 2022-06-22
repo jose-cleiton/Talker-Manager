@@ -29,8 +29,7 @@ app.get('/talker', async (req, res) => {
  });
  app.post('/login', isValidEmail, isValidPassword, (req, res) => {
   const token = generator.generate({ length: 16, numbers: true });
-  console.log(token);
-   res.status(200).json({ token });
+  return res.status(200).json({ token });
  });
 /* não remova esse endpoint, e para o avaliador funcionar */
 app.get('/', (_request, response) => {
