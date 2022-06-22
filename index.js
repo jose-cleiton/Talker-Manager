@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const generator = require('generate-password');
 const fsHelps = require('./helpers/fs');
+const { isValidEmail, isValidPassword } = require('./middlewares/validation');
 
 const app = express();
 app.use(bodyParser.json());
@@ -25,6 +26,11 @@ app.get('/talker', async (req, res) => {
       return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
     }
     return res.status(HTTP_OK_STATUS).json(foundTalker);
+ });
+ app.post('/login', isValidEmail, isValidPassword, (req, res) => {
+  const token = generator.generate({ length: 16, numbers: true });
+  console.log(token);
+   res.status(200).json({ token });
  });
 /* não remova esse endpoint, e para o avaliador funcionar */
 app.get('/', (_request, response) => {
