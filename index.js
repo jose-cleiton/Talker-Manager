@@ -40,6 +40,29 @@ app.get('/talker', async (req, res) => {
 
 /** 4 - Adicione as validações para o endpoint /login */
 
+  /** 5 - Crie o endpoint POST /talker */
+  app.post('/talker', async (req, res) => {
+    const { name, age, talk: { watchedAt, rate } } = req.body;
+    const talker = await fsHelps.read();
+    talker.push({ 
+      id: talker.length + 1, 
+      name, 
+      age, 
+      talk: { watchedAt, rate } });
+    await fsHelps.write(talker);
+    res.status(201).json({
+      id: talker.length,
+      name,
+      age,
+      talk: {
+        watchedAt,
+        rate,
+      },
+    });
+
+  });
+
+
 /* não remova esse endpoint, e para o avaliador funcionar */
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
