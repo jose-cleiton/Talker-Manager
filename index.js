@@ -2,7 +2,18 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const generator = require('generate-password');
 const fsHelps = require('./helpers/fs');
-const { isValidEmail, isValidPassword } = require('./middlewares/validation');
+const { 
+ 
+  isValidEmail,
+  isValidPassword,
+  isValidateToken,
+  isValidateName,
+  isValidateAge,
+  isValidateTalkField,
+  isValidateWatchedAt,
+  isValidateRate,
+
+} = require('./middlewares/validation');
 
 const app = express();
 app.use(bodyParser.json());
@@ -41,7 +52,14 @@ app.get('/talker', async (req, res) => {
 /** 4 - Adicione as validações para o endpoint /login */
 
   /** 5 - Crie o endpoint POST /talker */
-  app.post('/talker', async (req, res) => {
+  app.post('/talker',
+  isValidateToken,
+  isValidateName,
+  isValidateAge,
+  isValidateTalkField,
+  isValidateWatchedAt,
+  isValidateRate,  
+   async (req, res) => {    
     const { name, age, talk: { watchedAt, rate } } = req.body;
     const talker = await fsHelps.read();
     talker.push({ 
@@ -59,9 +77,7 @@ app.get('/talker', async (req, res) => {
         rate,
       },
     });
-
-  });
-
+  }); // endpoint POST /talker
 
 /* não remova esse endpoint, e para o avaliador funcionar */
 app.get('/', (_request, response) => {

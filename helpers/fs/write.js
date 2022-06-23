@@ -8,6 +8,4 @@ const write = async (data) => {
     }
 };
 
-module.exports = {
-    write,
-};
+module.exports = write;
