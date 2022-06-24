@@ -51,6 +51,12 @@ app.get('/talker/:id', Author.getTalkersID);
   isValidateRate, 
   Author.putTalkersId); // endpoint PUT /talker/:id 
 
+  /* 7 - Crie o endpoint DELETE /talker/:id */
+
+  app.delete('/talker/:id', isValidateToken, Author.deleteTalkersId); 
+  
+  // endpoint DELETE /talker/:id
+
 /* não remova esse endpoint, e para o avaliador funcionar */
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
