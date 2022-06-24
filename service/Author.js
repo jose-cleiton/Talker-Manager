@@ -73,6 +73,18 @@ const deleteTalkersId = async (req, res) => {
   res.status(204).end();
 };
 
+const getTalkerSerarch = async (req, res) => {
+  const { q } = req.query;
+  const talker = await fsHelps.read();
+  const foundTalker = talker.filter((user) => user.name
+  .toLowerCase().includes(q.toLowerCase()));
+  if (!q) return res.status(HTTP_OK_STATUS).json(talker);
+  
+  if (!foundTalker) return res.status(200).json([]);
+  
+  return res.status(HTTP_OK_STATUS).json(foundTalker);
+};
+
 module.exports = { 
   getTalkers, 
   getTalkersID,
@@ -80,5 +92,6 @@ module.exports = {
   postTalkers,
   putTalkersId, 
   deleteTalkersId,
+  getTalkerSerarch,
 
 };

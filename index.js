@@ -57,6 +57,12 @@ app.get('/talker/:id', Author.getTalkersID);
   
   // endpoint DELETE /talker/:id
 
+  /** 8 - Crie o endpoint GET /talker/search?q=searchTerm */
+
+  app.get('/talker/search', 
+  isValidateToken,  
+  Author.getTalkerSerarch); // endpoint GET /talker/search?q=searchTerm
+
 /* não remova esse endpoint, e para o avaliador funcionar */
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
