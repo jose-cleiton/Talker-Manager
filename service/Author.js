@@ -64,11 +64,21 @@ const postLogin = (_req, res) => {
   });
 };
 
+const deleteTalkersId = async (req, res) => {
+  const { id } = req.params;
+  const talker = await fsHelps.read();
+  const foundTalkerId = talker.findIndex((user) => +user.id === (+id));
+  talker.splice(foundTalkerId, 1);
+  await fsHelps.write(talker);
+  res.status(204).end();
+};
+
 module.exports = { 
   getTalkers, 
   getTalkersID,
   postLogin,
   postTalkers,
-  putTalkersId,
+  putTalkersId, 
+  deleteTalkersId,
 
 };
