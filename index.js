@@ -79,6 +79,34 @@ app.get('/talker', async (req, res) => {
     });
   }); // endpoint POST /talker
 
+  /** 6 - Crie o endpoint PUT /talker/:id */
+
+  app.put('/talker/:id', 
+  isValidateToken,
+  isValidateName,
+  isValidateAge,
+  isValidateTalkField,
+  isValidateWatchedAt,
+  isValidateRate,  
+  
+  async (req, res) => {
+    const { id } = req.params;
+    const { name, age, talk: { watchedAt, rate } } = req.body;
+    const talker = await fsHelps.read();
+    const foundTalkerId = talker.findIndex((user) => +user.id === (+id));
+    talker[foundTalkerId] = { name, age, id: +id, talk: { watchedAt, rate } };    
+    await fsHelps.write(talker);
+    res.status(200).json({
+      name,
+      age,
+      id: (+id),
+      talk: {
+        watchedAt,
+        rate,
+      },
+    });
+  });
+
 /* não remova esse endpoint, e para o avaliador funcionar */
 app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
